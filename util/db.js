@@ -9,17 +9,33 @@ var connect = function () {
     });
 }
 //getting data from signup form
-var signup = (data) => {
+var signup = (data, res) => {
     console.log(data);
     if (data.name.length > 0 && data.email.length > 0 && data.pass.length > 0) {
-        dbo.collection("users").insertOne(myobj, function (err, res) {
+        dbo.collection("users").insertOne(data, function (err, result) {
             if (err) throw err;
             console.log("1 document inserted");
+            res.redirect('/');
         });
     }
     else {
-        throw new error("Please fill all the fields");
+        res.render("sign_up", { msg: "Please fill all the fields" });
     }
+}
+//
+var check = (data, res) => {
+    dbo.collection('users').findOne({ email: data.email }, (err, result) => {
+        console.log(result);
+        if (err) throw err;
+        else if (result.email) {
+            console.log('go back');
+            res.render('sign_up', { msg: "email already exists" });
+        }
+        else {
+            signup(data, res);
+        }
+
+    })
 }
 //getting data from create post form
 // var create_post=(data)=>{
@@ -27,29 +43,40 @@ var signup = (data) => {
 //     if(data.)
 // }
 //login form
-var login = (data) => {
+var login = (data, res) => {
     console.log(data);
     if (data.email.length > 0 && data.pass.length > 0) {
         dbo.collection("users").findOne({ email: data.email }, function (err, result) {
             if (err) throw err;
-            if (result.email.length < 1) {
-                throw new error("Email does not exists");
-
+            if (result) {
+                if (result.pass !== data.pass) {
+                    res.render("index", { msg: "Wrong password" });
+                }
+                else {
+                    res.redirect('/users/home');
+                }
             }
-            if (result.pass !== data.pass) {
-                throw new error("Wrong password");
+            else {
+                res.render("index", { msg: "Email does not exists" });
             }
         });
     }
     else {
-        throw new error("Please fill all the fields");
+        res.render("index", { msg: "Please fill all the fields" });
     }
 }
-//palace all in dba as dba is exported----------------------------------
-var dba =
+var put_post = (data, res) => {
+    dbo.collection("posts").insertOne(data, (err, result) => {
+        if (err) throw err;
+    })
+}
+//place all in dba as dba is exported----------------------------------
+var db =
 {
     connect: connect,
     signup: signup,
-
+    login: login,
+    check: check,
+    put_post: put_post,
 };
-module.exports = dba;
+module.exports = db;
