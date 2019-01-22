@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="card card-container">
+        <h1><span class="glyphicon glyphicon-pencil"></span> Compose mail...</h1>
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin" action="/signup" method="post" id="mail_composer">
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="email" id="receiver" class="form-control" placeholder="Receiver's E-mail" name="recmail"
+                required>
+            <input type="email" id="ccmail" class="form-control" placeholder="CC" name="ccmail" required>
+            <input type="email" id="bccmail" class="form-control" placeholder="BCC" name="bccmail" required>
+            <input type="text" id="subject" class="form-control" placeholder="Subject" name="subject" required>
+            <textarea form="mail_composer" rows=8 id="content" class="form-control" placeholder="Write your mail content here..."
+                name="content" required></textarea>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit"><span class="glyphicon glyphicon-send"></span>
+                Send</button>
+        </form>
+    </div>
+</div>

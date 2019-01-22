@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="card card-container">
+        <h1><span class="glyphicon glyphicon-pencil"></span> Create Post...</h1>
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin" action="/signup" method="post" id="post_composer">
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="text" id="post_title" class="form-control" placeholder="Subject" name="title" required
+                autofocus>
+            <textarea form="post_composer" rows=8 id="content" class="form-control" placeholder="Say something..." name="content"
+                required></textarea>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Post</button>
+        </form>
+    </div>
+</div>
